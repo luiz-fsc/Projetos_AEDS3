@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         List<String> email = Arrays.asList("luizfs@gmail.com", "carmoluizfs@gmail.com");
-        Contas c1 = new Contas(1, "Luiz Fernando", email, "luizfs448", "1234", "00000000000", "BH", 0);
+        Contas c1 = new Contas(1, "Luiz Fernando", email, "luizfs448", "1234", "02056147602", "BH", (float) 1000.78);
         Contas ctemp = new Contas();
 
         FileOutputStream arq;
@@ -36,7 +36,7 @@ public class Main {
             arq2 = new FileInputStream("contas.db");
             dis = new DataInputStream(arq2);
 
-            if(dis.readInt() == 0){
+            if(dis.readByte() == 1){
                 len = dis.readInt();//inteiro referente ao tamanho do registro
                 ba = new byte[len];
                 dis.read(ba);

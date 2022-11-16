@@ -20,7 +20,7 @@ public class Contas{
     protected int transferenciasRealizadas;
     protected float saldoConta;
 
-    Contas(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade, int saldoConta){
+    Contas(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade, float saldoConta){
         this.lapide = 1;
         this.idConta = idConta;
         this.nomePessoa = nome;
@@ -62,7 +62,6 @@ public class Contas{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
-        //dos.writeInt(lapide); -> Lapide é escrita antes da chamada dessa função
         dos.writeInt(idConta);
         dos.writeUTF(nomePessoa);
         dos.writeInt(emails.size());// escrevo a quantidade de emails que o usuário tem
@@ -87,7 +86,6 @@ public class Contas{
         List <String> aux = new ArrayList<String>();
         int numEmails;
 
-        lapide = dis.readByte();
         idConta = dis.readInt();
         nomePessoa = dis.readUTF();
         numEmails = dis.readInt();
