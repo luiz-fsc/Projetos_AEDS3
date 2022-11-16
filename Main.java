@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         List<String> email = Arrays.asList("luizfs@gmail.com", "carmoluizfs@gmail.com");
-        Contas c1 = new Contas(1, "Luiz Fernando", email, "luizfs", "1234", "02056147602", "Belo Horizonte");
+        Contas c1 = new Contas(1, "Luiz Fernando", email, "luizfs448", "1234", "00000000000", "BH", 0);
         Contas ctemp = new Contas();
 
         FileOutputStream arq;
@@ -27,7 +27,7 @@ public class Main {
             arq = new FileOutputStream("contas.db");
             dos = new DataOutputStream(arq);
 
-            dos.writeInt(c1.lapide);
+            dos.writeByte(c1.lapide);
             ba = c1.toByteArray(); // tranforma dados de c1 em array de bytes
             dos.writeInt(ba.length); 
             dos.write(ba);

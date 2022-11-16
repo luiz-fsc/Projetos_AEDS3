@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Contas{
 
-    protected int lapide;
+    protected byte lapide;
     protected int idConta;
     protected String nomePessoa;
     protected List<String> emails;
@@ -20,8 +20,8 @@ public class Contas{
     protected int transferenciasRealizadas;
     protected float saldoConta;
 
-    Contas(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade){
-        this.lapide = 0;
+    Contas(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade, int saldoConta){
+        this.lapide = 1;
         this.idConta = idConta;
         this.nomePessoa = nome;
         this.emails = emails;
@@ -30,7 +30,7 @@ public class Contas{
         this.cpf = cpf;
         this.cidade = cidade;
         this.transferenciasRealizadas = 0;
-        this.saldoConta = 0;
+        this.saldoConta = saldoConta;
     }
 
     Contas(){
@@ -87,7 +87,7 @@ public class Contas{
         List <String> aux = new ArrayList<String>();
         int numEmails;
 
-        lapide = dis.readInt();
+        lapide = dis.readByte();
         idConta = dis.readInt();
         nomePessoa = dis.readUTF();
         numEmails = dis.readInt();
@@ -103,8 +103,21 @@ public class Contas{
         saldoConta = dis.readFloat();
     
     }
-
     
+    public void realizaTransf(int quantidade){
+        if(saldoConta > quantidade){
+            saldoConta -= quantidade;
+            transferenciasRealizadas++;
+        }else{
+            System.out.println("Saldo na conta insuficiente para realizar transferencia!");
+        }
+    }
+
+    public void recebeTransf(int quantidade){
+        saldoConta += quantidade;
+        transferenciasRealizadas++;
+    }
+
 
 
 }
