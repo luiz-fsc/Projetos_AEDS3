@@ -27,10 +27,10 @@ public class Main {
             arq = new FileOutputStream("contas.db");
             dos = new DataOutputStream(arq);
 
-            dos.writeByte(c1.lapide);
+            dos.writeByte(c1.lapide); // 1 - lapide
             ba = c1.toByteArray(); // tranforma dados de c1 em array de bytes
-            dos.writeInt(ba.length); 
-            dos.write(ba);
+            dos.writeInt(ba.length); // 2 - tamanho 
+            dos.write(ba); // 3 - dados
             dos.close();
 
             arq2 = new FileInputStream("contas.db");
