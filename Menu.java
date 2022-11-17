@@ -42,5 +42,9 @@ public class Menu {
         }else if(opcao == 3){
             
         }
+
+        
+
+        sc.close();
     }
 }
