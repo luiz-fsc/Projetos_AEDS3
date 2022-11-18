@@ -64,7 +64,7 @@ public class Contas{
 
         dos.writeInt(idConta);
         dos.writeUTF(nomePessoa);
-        /*dos.writeInt(emails.size());// escrevo a quantidade de emails que o usuário tem
+        dos.writeInt(emails.size());// escrevo a quantidade de emails que o usuário tem
         for(String email : emails){
             dos.writeUTF(email);//escrevo todos os emails
         }
@@ -73,7 +73,7 @@ public class Contas{
         dos.writeUTF(cpf);
         dos.writeUTF(cidade);
         dos.writeInt(transferenciasRealizadas);
-        dos.writeFloat(saldoConta);*/
+        dos.writeFloat(saldoConta);
         
         return baos.toByteArray();
     }
