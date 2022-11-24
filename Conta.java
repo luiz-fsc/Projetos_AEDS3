@@ -62,6 +62,7 @@ public class Conta{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
 
+        dos.writeByte(lapide);
         dos.writeInt(idConta);
         dos.writeUTF(nomePessoa);
         dos.writeInt(emails.size());// escrevo a quantidade de emails que o usuário tem
@@ -86,6 +87,7 @@ public class Conta{
         List <String> aux = new ArrayList<String>();
         int numEmails;
 
+        lapide = dis.readByte();
         idConta = dis.readInt();
         nomePessoa = dis.readUTF();
         numEmails = dis.readInt();
