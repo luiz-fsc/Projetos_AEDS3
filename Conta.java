@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Contas{
+public class Conta{
 
     protected byte lapide;
     protected int idConta;
@@ -20,7 +20,7 @@ public class Contas{
     protected int transferenciasRealizadas;
     protected float saldoConta;
 
-    Contas(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade, float saldoConta){
+    Conta(int idConta, String nome, List<String> emails, String usuario, String senha, String cpf, String cidade, float saldoConta){
         this.lapide = 1;
         this.idConta = idConta;
         this.nomePessoa = nome;
@@ -33,7 +33,7 @@ public class Contas{
         this.saldoConta = saldoConta;
     }
 
-    Contas(){
+    Conta(){
         this.idConta = -1;
         this.nomePessoa = "";
         this.nomeUsuario = "";

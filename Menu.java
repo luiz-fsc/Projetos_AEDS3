@@ -72,7 +72,7 @@ public class Menu {
             }else if(opcao == 2){
                 //realizar uma transferencia
                 System.out.println("informe de qual conta: ");
-                int id = Integer.parseInt(sc.nextLine());
+                //int id = Integer.parseInt(sc.nextLine());
             }else if(opcao == 3){
                 
             }else if(opcao == 4){
