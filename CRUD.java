@@ -56,4 +56,31 @@ public class CRUD {
         return resp;
     }
 
+    public static Boolean update(Conta novoReg, RandomAccessFile raf){
+        Boolean resp = false;
+
+        try {
+            raf.seek(0);
+            raf.readInt();
+            long cabecote = raf.getFilePointer();
+            while(cabecote < raf.length()){
+                int lenReg = raf.readInt();
+                byte[] ba1 = new byte[lenReg];
+                raf.read(ba);
+                Conta cTemp = new Conta();
+                cTemp.fromByteArray(ba);
+                if(cTemp.lapide == 1){
+                    if(cTemp.idConta == novoReg.idConta){
+                      byte[] ba2 = novoReg.toByteArray();
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return resp;
+    }
+
 }
