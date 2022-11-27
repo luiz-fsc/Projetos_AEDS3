@@ -32,7 +32,7 @@ public class CRUD {
         Conta resp = null;
         try {
             raf.seek(0);
-            raf.readInt();
+            int lastID = raf.readInt();
             long cabecote = raf.getFilePointer();
             while(cabecote < raf.length()){
                 int lenReg = raf.readInt();
@@ -47,6 +47,53 @@ public class CRUD {
                     }else{
                         cabecote = raf.getFilePointer();
                     }
+                }else{
+                    cabecote = raf.getFilePointer();
+                }
+            }
+            raf.seek(0);
+            raf.writeInt(lastID);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return resp;
+    }
+
+    public static Boolean update(Conta novoObj, RandomAccessFile raf){
+        Boolean resp = false;
+        try {
+            raf.seek(4);
+            long cabecote = raf.getFilePointer();
+            while(cabecote < raf.length()){
+                long pos = raf.getFilePointer();
+                int lenReg = raf.readInt();
+                byte[] reg = new byte[lenReg];
+                raf.read(reg);
+                Conta cTemp = new Conta();
+                cTemp.fromByteArray(reg);
+                if(cTemp.lapide == 1){
+                    if(cTemp.idConta == novoObj.idConta){
+                        byte[] NovoReg = novoObj.toByteArray();
+                        if(NovoReg.length <= reg.length){
+                            raf.seek(pos);
+                            raf.writeInt(lenReg); //tamanho registro
+                            raf.write(NovoReg); // dados
+                        }else{
+                            raf.seek(pos);
+                            raf.readInt();
+                            raf.writeByte(0);
+                            raf.seek(raf.length());
+                            raf.writeInt(NovoReg.length);
+                            raf.write(NovoReg);
+                        }
+                        resp = true;
+                        cabecote = raf.length();
+                    }else{
+                        cabecote = raf.getFilePointer();
+                    }
+                }else{
+                    cabecote = raf.getFilePointer();
                 }
             }
         } catch (IOException e) {
@@ -56,29 +103,36 @@ public class CRUD {
         return resp;
     }
 
-    public static Boolean update(Conta novoReg, RandomAccessFile raf){
-        Boolean resp = false;
+    public static Boolean delete(RandomAccessFile raf, int id){
+        boolean resp = false;
 
         try {
-            raf.seek(0);
-            raf.readInt();
+            raf.seek(4);
             long cabecote = raf.getFilePointer();
             while(cabecote < raf.length()){
+                long pos = raf.getFilePointer();
                 int lenReg = raf.readInt();
-                byte[] ba1 = new byte[lenReg];
+                byte[] ba = new byte[lenReg];
                 raf.read(ba);
                 Conta cTemp = new Conta();
                 cTemp.fromByteArray(ba);
                 if(cTemp.lapide == 1){
-                    if(cTemp.idConta == novoReg.idConta){
-                      byte[] ba2 = novoReg.toByteArray();
+                    if(cTemp.idConta == id){
+                        raf.seek(pos);
+                        raf.readInt();
+                        raf.writeByte(0);
+                        resp = true;
+                        cabecote = raf.length();
+                    }else{
+                        cabecote = raf.getFilePointer();
                     }
+                }else{
+                    cabecote = raf.getFilePointer();
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return resp;
     }
