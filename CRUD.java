@@ -137,4 +137,34 @@ public class CRUD {
         return resp;
     }
 
+    public static boolean validaNomeUser(String nomeUser, RandomAccessFile raf){
+        boolean resp = true;
+        try {
+            raf.seek(4);
+            long cabecote = raf.getFilePointer();
+            while(cabecote < raf.length()){
+                int lenReg = raf.readInt();
+                byte[] reg = new byte[lenReg];
+                raf.read(reg);
+                Conta cTemp = new Conta();
+                cTemp.fromByteArray(reg);
+                if(cTemp.lapide == 1){
+                    if(cTemp.nomeUsuario.equals(nomeUser)){
+                        resp = false;
+                        cabecote = raf.length();
+                    }else{
+                        cabecote = raf.getFilePointer();
+                    }
+                }else{
+                    cabecote = raf.getFilePointer();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return resp;
+    }
+
 }

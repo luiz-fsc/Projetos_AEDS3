@@ -57,10 +57,14 @@ public class Menu {
                 //usuario
                 System.out.println("Nome de Usuário: ");
                 String usuario = sc.nextLine();
+                while(CRUD.validaNomeUser(usuario, raf) == false){
+                    System.out.println("Este nome de usuário já está sendo usado, por favor digite outro: ");
+                    usuario = sc.nextLine();
+                }
                 //verificação necessária
 
                 //senha
-                System.out.println("Senha: ");
+                System.out.println("Digite uma senha: ");
                 String senha = sc.nextLine();
 
                 //saldo conta
