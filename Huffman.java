@@ -5,6 +5,11 @@ import java.util.PriorityQueue;
 import java.io.IOException;
 //===========================================================================================
 public class Huffman {
+    public HashMap<Character,String> huffcode= new HashMap<>();
+    No raiz;
+    String decodedTxt="";
+    private boolean jaRodouCriar = false; //checa se o metodo criar ja rodou dentro do escopo do codigo
+    StringBuilder sb = new StringBuilder();
     //Classe no necessaria para criar a arvore de huffman
     class No{
         //valores
@@ -27,8 +32,9 @@ public class Huffman {
             this.noDir=noDir;
         }
     }
-        public HashMap<Character,String> huffcode= new HashMap<>();
+        
         public void criar(String nomeArquivo)throws IOException{
+            jaRodouCriar = true;
             RandomAccessFile raf = new RandomAccessFile(nomeArquivo, "rw");
             String linha;
             String texto=""; //Servira para fazer o stringbuilder
@@ -61,19 +67,18 @@ public class Huffman {
                 arvore.add(new No(null,soma,esq,dir));
             }
             //obtendo o no raiz
-            No raiz = arvore.peek();
+            this.raiz = arvore.peek();
             codificar(raiz,"",this.huffcode);
             //para checar a arvore de huffman: 
             //System.out.println(huffcode);
             //Adicionando todo o codigo mapeado dentro de uma unica string
-            StringBuilder sb = new StringBuilder();
             for(char c:texto.toCharArray()){
                 //obtem a string codificada
-                sb.append(huffcode.get(c));
+                this.sb.append(huffcode.get(c));
             }
             //adicionara a codificacao dentro de um arquivo txt
             RandomAccessFile rafC = new RandomAccessFile("codificado.txt", "rw");
-            rafC.writeUTF(sb.toString());
+            rafC.writeUTF(this.sb.toString());
             rafC.close();
         }
         private void codificar(No raiz, String s, HashMap<Character,String> huffman){
@@ -86,13 +91,33 @@ public class Huffman {
             codificar(raiz.noDir,s+'1',huffman);
         }
         public void decodificar()throws IOException{
-            RandomAccessFile raf = new RandomAccessFile("banco.db", "rw");
-            raf.
+            RandomAccessFile raf = new RandomAccessFile("decodificado.txt", "rw");
+            if (jaRodouCriar = false) criar("banco.db");
+            if(isFolha(this.raiz)){
+                while(this.raiz.freq-->0){
+                    this.decodedTxt+=this.raiz.ch;
+                }
+            }else{
+                int indice=-1;
+                while(indice<this.sb.length()-1){
+                    indice= decodificar(this.raiz,indice,this.sb);
+                }
+            }
+            raf.writeUTF(decodedTxt);
+            raf.close();
         }
         public int decodificar(No raiz, int indice,StringBuilder sb){
-            
             //checa se a arvore está vazia
-            if(raiz==null){}
+            if(raiz==null) return indice;
+            //checa se o no e folha ou nao
+            if(isFolha(raiz)){
+                this.decodedTxt+=raiz.ch;
+                return indice;
+            }
+            indice++;
+            raiz = (sb.charAt(indice)=='0')?raiz.noEsq : raiz.noDir;
+            indice = decodificar(raiz,indice,sb);
+            return indice;
         }
         private boolean isFolha(No raiz){
             return raiz.noDir==null && raiz.noEsq==null;

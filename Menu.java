@@ -95,18 +95,23 @@ public class Menu {
                         System.out.println("Digite a opcao desejada:\n 1-Codificar \n 2-Descodificar \n 3-Sair");
                         opt=Integer.parseInt(sc.nextLine());
                         try{
+                            Huffman h = new Huffman();
                             if(opt == 1){
                                 System.out.println("Selecione o método:\n 1-Huffman\n 2-LZW\n");
                                 opt=Integer.parseInt(sc.nextLine());
                                 if(opt==1){
-                                    Huffman h = new Huffman();
                                     h.criar("banco.db");
                                 }else if(opt==2){
                                     //adicione o LZW aqui
                                 }
                             }else if(opt == 2){
                                 if(codedRaf.readLine()!=""){
-                                    //escrever a codificacao aqaui
+                                    System.out.println("Selecione o método:\n 1-Huffman\n 2-LZW\n");
+                                    if(opt==1){
+                                        h.decodificar();
+                                    }else if(opt==2){
+                                        //adicione o LZW aqui
+                                    }
                                 }
                             }
                         }catch(IOException e){System.out.println(e);}
