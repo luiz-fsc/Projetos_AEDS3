@@ -138,6 +138,7 @@ public class Menu {
                     CRUD.delete(raf, Integer.parseInt(sc.nextLine()));
                 break;
                 case 6:
+                    Intercalacao.IBC();
                 break;
                 case 7:
                     int opt=0;
