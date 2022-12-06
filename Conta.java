@@ -104,20 +104,15 @@ public class Conta{
     
     }
     
-    public void realizaTransf(int quantidade){
-        if(saldoConta > quantidade){
-            saldoConta -= quantidade;
-            transferenciasRealizadas++;
-        }else{
+    public void Transferencia(Conta receber, float quantidade){
+        if(this.saldoConta > quantidade){
             System.out.println("Saldo na conta insuficiente para realizar transferencia!");
+            return;
+        }else{
+            this.saldoConta = this.saldoConta-quantidade;
+            receber.saldoConta +=quantidade;
+
+            System.out.println("Transferencia de R$"+quantidade+" enviados de "+this.nomeUsuario+" para "+receber.nomeUsuario+" realizada com sucesso!\n");
         }
     }
-
-    public void recebeTransf(int quantidade){
-        saldoConta += quantidade;
-        transferenciasRealizadas++;
-    }
-
-
-
 }

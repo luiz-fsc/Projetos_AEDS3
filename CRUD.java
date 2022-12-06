@@ -102,6 +102,11 @@ public class CRUD {
 
         return resp;
     }
+    //atualiza duas contas de uma vez (para caso haja transferencias)
+    public static void update(Conta conta1, Conta conta2, RandomAccessFile raf){
+        update(conta1,raf);
+        update(conta2,raf);
+    }
 
     public static Boolean delete(RandomAccessFile raf, int id){
         boolean resp = false;

@@ -6,13 +6,16 @@ import java.util.Scanner;
 
 public class Menu {
     public static void main(String[] args) throws IOException, InterruptedException {
+        //Setando o arquivo principal de armazenamento de dados
+        final String arquivodb = "clientes.db";
 
         //Organização inicial para funcionamento do programa
         //====================================================================================
-        RandomAccessFile raf = new RandomAccessFile("banco.db", "rw");
+        RandomAccessFile raf = new RandomAccessFile(arquivodb, "rw");
         raf.writeInt(0);//escrevo zero para auxiliar na geração dos proximos ids das contas
         Scanner sc = new Scanner(System.in);
         int opcao = 0;
+        Conta conta = null;
         //====================================================================================
 
 
@@ -50,7 +53,7 @@ public class Menu {
                     String cidade = sc.nextLine();
 
                     //emails
-                    System.out.println("Emails (se tiver mais de um, separa por uma virgula): ");
+                    System.out.println("E-mail (se tiver mais de um, separe por uma virgula): ");
                     String emailAux = sc.nextLine();
                     List<String> listaEmails = Arrays.asList(emailAux.split(","));
 
@@ -75,16 +78,64 @@ public class Menu {
                 break;
                 case 2:
                     //realizar uma transferencia
-                    System.out.println("informe de qual conta: ");
-                    //int id = Integer.parseInt(sc.nextLine());
+                    System.out.println("informe o ID da conta a enviar: ");
+                    Conta enviar =  CRUD.read(raf, Integer.parseInt(sc.nextLine()));
+                    System.out.println("digite o valor desejado: ");
+                    float valor = Float.parseFloat(sc.nextLine());
+                    System.out.println("Informe o ID da conta a receber: ");
+                    Conta receber = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
+                    enviar.Transferencia(receber, valor);
+                    //atualizando os novos valores
+                    CRUD.update(enviar, receber, raf);
                 break;
                 case 3:
                     //ler um registro
-                    System.out.println("informe de qual conta: ");
+                    System.out.println("informe o ID da conta: ");
+                    conta = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
+                    System.out.println(conta.toString());
                 break;
                 case 4:
+                    //atualizar um registro
+                    System.out.println("informe o ID da conta: ");
+                    conta = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
+                    int opti=0;
+                    while(opti<1 && opti>4){
+                        System.out.println("Digite a opcao que deseja alterar: 1 - Cidade\n 2 - Email\n 3 - Senha\n 4 - Nome de usuario\n");
+                        opti= Integer.parseInt(sc.nextLine());
+                        switch(opti){
+                            case 1:
+                                //Atualizar cidade
+                                System.out.println("Digite a nova Cidade: ");
+                                String altCidade = sc.nextLine();
+                                conta.cidade=altCidade;
+                            break;
+                            case 2:
+                                //Atualizar Email
+                                opti=0;
+                                while(opti!=1 && opti!=2){
+                                    
+                                }
+                                System.out.println("Deseja adicionar um novo email(1) ou alterar o existente(2)?\n");
+                                opti= Integer.parseInt(sc.nextLine());
+                                if(opti==1){
+                                    System.out.println("Digite o novo email a ser inserido: ");
+                                    String newEmail = sc.nextLine();
+                                    conta.emails.add(newEmail);
+                                }else{
+                                    System.out.println("Altere o E-mail (se tiver mais de um, separe por uma virgula): ");
+                                    String emailAlt = sc.nextLine();
+                                    conta.emails = Arrays.asList(emailAlt.split(","));
+                                }
+                            break;
+                        }
+                    }
+                    //Atualizando o registro para o arquivo
+                    CRUD.update(conta,raf);                    
                 break;
                 case 5:
+                    //Deletar uma conta
+                    System.out.println("informe o ID da conta a deletar: ");
+                    CRUD.delete(raf, Integer.parseInt(sc.nextLine()));
                 break;
                 case 6:
                 break;
@@ -100,7 +151,7 @@ public class Menu {
                                 System.out.println("Selecione o método:\n 1-Huffman\n 2-LZW\n");
                                 opt=Integer.parseInt(sc.nextLine());
                                 if(opt==1){
-                                    h.criar("banco.db");
+                                    h.criar(arquivodb);
                                 }else if(opt==2){
                                     //adicione o LZW aqui
                                 }
