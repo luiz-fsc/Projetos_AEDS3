@@ -90,9 +90,27 @@ public class Menu {
                 break;
                 case 3:
                     //ler um registro
-                    System.out.println("informe o ID da conta: ");
-                    conta = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
-                    System.out.println(conta.toString());
+                    //adicionando o algoritmo de casamento de padroes de Knutt-Morris-Pratt (KMP) para obter a pesquisa através do nome de usuario
+                    opcao=0;
+                    while(opcao!=1 && opcao!=2){
+                        System.out.println("Digite o metodo a realizar a pesquisa:\n 1 - ID do usuario (CRUD)\n 2 - Nome de usuario (KMP)\n");
+                        opcao = Integer.parseInt(sc.nextLine());
+                        if(opcao == 1){
+                            System.out.println("informe o ID da conta: ");
+                            conta = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
+                            System.out.println(conta.toString());
+                        }else if(opcao == 2){
+                            System.out.println("informe o nome de usuario: ");
+                            String username = sc.nextLine();
+                            Conta resp = KMP.pesquisa(username);
+                            if(resp==null){
+                                System.out.println("Resultado nao encontrado!!");
+                            }else{
+                                System.out.println(resp.toString());
+                            }
+                        }
+                    }
+                    
                 break;
                 case 4:
                     //atualizar um registro
@@ -100,7 +118,7 @@ public class Menu {
                     conta = CRUD.read(raf, Integer.parseInt(sc.nextLine()));
                     int opti=0;
                     while(opti<1 && opti>4){
-                        System.out.println("Digite a opcao que deseja alterar: 1 - Cidade\n 2 - Email\n 3 - Senha\n 4 - Nome de usuario\n");
+                        System.out.println("Digite a opcao que deseja alterar:\n 1 - Cidade\n 2 - Email\n 3 - Senha\n 4 - Nome de usuario\n");
                         opti= Integer.parseInt(sc.nextLine());
                         switch(opti){
                             case 1:
@@ -170,7 +188,6 @@ public class Menu {
                         
                     }
                    codedRaf.close();
-
                 break;
             }
             System.out.println("Nova Operacao: \n1 - Abrir Conta \n2 - Realizar uma transferencia \n3 - Ler um Registro \n4 - Atualizar um Registro \n5 - Deletar um Registro \n6 - Ordenar Arquivo \n7 - Codificar/descodificar\n8 - sair");
