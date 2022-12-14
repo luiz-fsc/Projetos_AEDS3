@@ -20,7 +20,7 @@ public class Menu {
 
 
         System.out.println("Menu Inicial");
-        System.out.println("Digite: \n1 - Abrir Conta \n2 - Realizar uma transferencia \n3 - Ler um Registro \n4 - Atualizar um Registro \n5 - Deletar um Registro \n6 - Ordenar Arquivo \n7 - Codificar/descodificar\n8 - sair");
+        System.out.println("Digite: \n1 - Abrir Conta \n2 - Realizar uma transferencia \n3 - Ler um Registro \n4 - Atualizar um Registro \n5 - Deletar um Registro \n6 - Ordenar Arquivo \n7 - Codificar/descodificar\n8 - Criptografia\n9 - sair");
         opcao = Integer.parseInt(sc.nextLine());
 
         //limpando console
@@ -32,7 +32,7 @@ public class Menu {
         //=====================================================================================
 
         
-        while(opcao != 8){
+        while(opcao != 9){
             switch(opcao){ 
                 case 1:
                     //Criar uma conta
@@ -189,8 +189,22 @@ public class Menu {
                     }
                    codedRaf.close();
                 break;
+                case 8:
+                    System.out.println("ATENCAO! E preciso ja possuir um arquivo criptografado e uma chave ja definida para poder decodificar!!\n");
+                    Criptografia criptografia = new Criptografia();
+                    System.out.println("1- Criptografar\n2- Descriptografar");
+                    opt=Integer.parseInt(sc.nextLine());
+                    if(opt==1){
+                        try{
+                            criptografia.criptografar();
+                        }catch(Exception e){System.out.println("ERRO AO REALIZAR CRIPTOGRAFIA!!\n"+ e.getMessage());}
+                    }else if(opt==2){
+                        try{
+                            criptografia.descriptografar();
+                        }catch(Exception e){System.out.println("ERRO AO REALIZAR DECODIFICACAO!!\n"+ e.getMessage());}
+                    }
             }
-            System.out.println("Nova Operacao: \n1 - Abrir Conta \n2 - Realizar uma transferencia \n3 - Ler um Registro \n4 - Atualizar um Registro \n5 - Deletar um Registro \n6 - Ordenar Arquivo \n7 - Codificar/descodificar\n8 - sair");
+            System.out.println("Nova Operacao: \n1 - Abrir Conta \n2 - Realizar uma transferencia \n3 - Ler um Registro \n4 - Atualizar um Registro \n5 - Deletar um Registro \n6 - Ordenar Arquivo \n7 - Codificar/descodificar\n8 - Criptografia\n9 - sair");
             opcao = Integer.parseInt(sc.nextLine());
         }
              
